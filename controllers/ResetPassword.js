@@ -90,3 +90,5 @@ const resetPassword = async(req,res)=>{
         })
     }
 }
+
+export {resetPassewordToken,resetPassword};

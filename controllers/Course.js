@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import Course from '../models/Course.js';
 import Tag from '../models/Tag.js';
 import User from '../models/User.js';

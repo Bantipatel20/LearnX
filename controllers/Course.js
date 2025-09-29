@@ -90,5 +90,6 @@ const getAllCourses = async(req,res)=>{
     }
 }
 
+export { createCourse , getAllCourses };
 
 

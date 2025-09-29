@@ -25,7 +25,7 @@ const createSection = async(req ,res)=>{
         return res.status(200).json({
             success:true,
             message:"Section created Successfully",
-            error:err.message
+            updateCourse
         })
     }catch(err){
         return res.status(500).json({
@@ -51,7 +51,8 @@ const updateSection = async(req,res)=>{
 
         return res.status(200).json({
             success:true,
-            message:"Section Update successfully"
+            message:"Section Update successfully",
+            updateSection
         })
 
     }catch(err){

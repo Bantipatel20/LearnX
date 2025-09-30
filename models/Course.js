@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Category from "./Category";
 
 const courseSchema = new mongoose.Schema({
     courseName:{
@@ -38,14 +39,25 @@ const courseSchema = new mongoose.Schema({
         type:String,
     },
     tag:{
+        type:[String],
+        required:true,
+    },
+    category:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"Tag"
+        ref:"Category"
     },
     studentEnrolled:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User",
         required:true,
-    }]
+    }],
+    instructions:{
+        type:[String],
+    },
+    status:{
+        type:String,
+        enum:["Draft","Published"],
+    }
 })
 
 export default mongoose.model("Course",courseSchema);

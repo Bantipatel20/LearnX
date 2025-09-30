@@ -5,8 +5,7 @@ import bcrypt from 'bcrypt';
 import Profile from '../models/Profile.js';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import { use } from 'react';
-import { json } from 'express';
+
 
 dotenv.config();
 
@@ -182,26 +181,46 @@ const login = async(req,res)=>{
     }
 }
 
-// const changePassword = async(req,res)=>{
-//     try{
-//         const {olpPassword , newPassword , confirmPassword} = req.body;
+const changePassword = async(req,res)=>{
+    try{
+        const {oldPassword , newPassword , confirmPassword} = req.body;
+        const id = req.user.id;
+        if(!oldPassword || !newPassword || !confirmPassword){
+            return res.status(400).json({
+                status:false,
+                message:"All fields are required"
+            })
+        }else if(newPassword!==confirmPassword){
+            return res.status(400).json({
+                status:false,
+                message:"newPassword and ConfirmPassword value does not match, Please try again"
+            })
+        }
+        
+        const userDetails  = await User.findOne(id);
 
-//         if(!olpPassword || !newPassword || !confirmPassword){
-//             return res.status(400).json({
-//                 status:false,
-//                 message:"All fields are required"
-//             })
-//         }else if(newPassword!==confirmPassword){
-//             return res.status(400).json({
-//                 status:false,
-//                 message:"newPassword and ConfirmPassword value does not match, Please try again"
-//             })
-//         }
-//         const use
-//         if(await bcrypt.compare())
-//     }catch(err){
+        if(!userDetails){
+            return res.status(404).json({
+                success:false,
+                message:'User not found'
+            })
+        }
 
-//     }
-// }
+        if(!await bcrypt.compare(user.password,oldPassword)){
+            return res.status(400).json({
+                success:false,
+                message:"Password is invalid"
+            })
+        }
 
-export { sendOTP, signup ,login};
+        return res.status(200).json({
+            success:true,
+            message:"Password change successfully"
+        }) 
+
+    }catch(err){
+
+    }
+}
+
+export { sendOTP, signup ,login , changePassword};
